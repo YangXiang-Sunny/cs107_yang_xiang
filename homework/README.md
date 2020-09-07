@@ -1,1 +1,1 @@
-This fold contains homework. 
+# Homework Directory
