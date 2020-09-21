@@ -2,13 +2,13 @@ This is repo for course CS107. Lectures, homework and pair programming are inclu
 
 ## Content
  
-	lectures 
+* lectures 
 This folder contains lecture notes.
  
-	homeworks
+* homeworks
 This folder contains homework.
 
-	pair-programming
+* pair-programming
 This folder contains pair-programming materials.
 
  
