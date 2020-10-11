@@ -35,6 +35,8 @@ class LinearRegression(Regression):
         self.params['coefficients'] = beta_hat[1:]
 
     def predict(self, X):
+        if self.params == {}:
+            raise Exception('Can not predict before fitting')
         n, p = X.shape
         y_pred = X @ self.params['coefficients'] + self.params['intercept'] * np.ones(n)
         return y_pred
