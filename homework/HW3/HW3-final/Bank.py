@@ -186,9 +186,3 @@ def ATMSession(bankUser):
 
     return Interface
 
-
-if __name__ == '__main__':
-    # test ATM closure
-    user = BankUser('Joe')
-    interface = ATMSession(user)
-    interface()
