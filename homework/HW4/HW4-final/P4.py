@@ -2,33 +2,22 @@
 
 class AutoDiffToy():
 
-    def __init__(self, x, alpha=1, beta=0):
-        self.x = x
-        self.alpha = alpha
-        self.beta = beta
-        self.val, self.der = self.forward()
-
-    def forward(self):
-        # Calculate values of function and derivative with forward AD
-        x1 = self.x
-        d1 = 1.0
-        v1 = self.alpha * x1
-        d2 = self.alpha * d1
-        v2 = v1 + self.beta
-        d3 = d2
-        f, f_diff = v2, d3
-        return f, f_diff
+    def __init__(self, val):
+        self.val = val
+        self.der = 1
 
     def __add__(self, other):
         try:
-            x, alpha, beta = other.x, other.alpha, other.beta
-            if self.x == other.x:
-                return AutoDiffToy(self.x, self.alpha + other.alpha, self.beta + other.beta)
-            else:
-                raise Exception("Error! Two AutoDiffToys have different x values!")
+            # Duck typing two AutoDiffToy objects
+            res = AutoDiffToy(self.val + other.val)
+            res.der = self.der + other.der
+            return res
         except AttributeError:
+            # Handle float / int case
             if (type(other) == float) or (type(other) == int):
-                return AutoDiffToy(self.x, self.alpha, self.beta+other)
+                res = AutoDiffToy(self.val + other)
+                res.der = self.der
+                return res
             else:
                 raise Exception('Error! Type not acceptable!')
 
@@ -37,11 +26,16 @@ class AutoDiffToy():
 
     def __mul__(self, other):
         try:
-            x, alpha, beta = other.x, other.alpha, other.beta
-            raise Exception("Error! Can not multiply two AutoDiffToys!")
+            # Duck typing two AutoDiffToy objects
+            res = AutoDiffToy(self.val * other.val)
+            res.der = self.der * other.val + self.val * other.der
+            return res
         except AttributeError:
+            # Handle float / int case
             if (type(other) == float) or (type(other) == int):
-                return AutoDiffToy(self.x, other * self.alpha, other * self.beta)
+                res = AutoDiffToy(self.val * other)
+                res.der = self.der * other
+                return res
             else:
                 raise Exception('Error! Type not acceptable!')
 
